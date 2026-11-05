@@ -1,0 +1,50 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!--
+    Build against your own KSP 1.12.x install:
+      dotnet build -c Release -p:KSPDIR="/path/to/Kerbal Space Program"
+    Or set the KSPDIR environment variable. Output is copied to GameData/FarHorizons/Plugins.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <AssemblyName>FarHorizons</AssemblyName>
+    <RootNamespace>FarHorizons</RootNamespace>
+    <Version>0.1.0</Version>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+    <KSPDIR Condition="'$(KSPDIR)' == ''">$([System.Environment]::GetEnvironmentVariable('KSPDIR'))</KSPDIR>
+  </PropertyGroup>
+
+  <!-- Windows/Linux layout first, then macOS app bundle. -->
+  <PropertyGroup>
+    <KSPManaged Condition="Exists('$(KSPDIR)/KSP_x64_Data/Managed')">$(KSPDIR)/KSP_x64_Data/Managed</KSPManaged>
+    <KSPManaged Condition="'$(KSPManaged)' == '' And Exists('$(KSPDIR)/KSP_Data/Managed')">$(KSPDIR)/KSP_Data/Managed</KSPManaged>
+    <KSPManaged Condition="'$(KSPManaged)' == '' And Exists('$(KSPDIR)/KSP.app/Contents/Resources/Data/Managed')">$(KSPDIR)/KSP.app/Contents/Resources/Data/Managed</KSPManaged>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(KSPManaged)' != ''">
+    <Reference Include="Assembly-CSharp"><HintPath>$(KSPManaged)/Assembly-CSharp.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="Assembly-CSharp-firstpass"><HintPath>$(KSPManaged)/Assembly-CSharp-firstpass.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine"><HintPath>$(KSPManaged)/UnityEngine.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.CoreModule"><HintPath>$(KSPManaged)/UnityEngine.CoreModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.AnimationModule"><HintPath>$(KSPManaged)/UnityEngine.AnimationModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ImageConversionModule"><HintPath>$(KSPManaged)/UnityEngine.ImageConversionModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.ScreenCaptureModule"><HintPath>$(KSPManaged)/UnityEngine.ScreenCaptureModule.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="UnityEngine.IMGUIModule"><HintPath>$(KSPManaged)/UnityEngine.IMGUIModule.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+
+  <Target Name="CheckKSP" BeforeTargets="ResolveAssemblyReferences" Condition="'$(KSPManaged)' == ''">
+    <Error Text="KSP install not found. Pass -p:KSPDIR=&quot;/path/to/Kerbal Space Program&quot; or set the KSPDIR environment variable." />
+  </Target>
+
+  <Target Name="CopyToGameData" AfterTargets="Build">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(MSBuildProjectDirectory)/../../GameData/FarHorizons/Plugins" />
+  </Target>
+</Project>

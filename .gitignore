@@ -1,0 +1,8 @@
+bin/
+obj/
+*.user
+.vs/
+.idea/
+GameData/FarHorizons/Plugins/*.dll
+GameData/FarHorizons/Plugins/*.pdb
+dist/
