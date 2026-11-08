@@ -1,0 +1,17 @@
+{
+    "spec_version": "v1.4",
+    "identifier": "FarHorizons",
+    "name": "Far Horizons Science",
+    "abstract": "Deep-space science expansion: drill cores, solar wind and comet dust collection, in-flight sample analysis, real saved photos, atmospheric entry probes, impact seismology and heliosphere probes.",
+    "author": "codingsushi79",
+    "$kref": "#/ckan/github/codingsushi79/farhorizons",
+    "$vref": "#/ckan/ksp-avc",
+    "license": "MIT",
+    "tags": [ "plugin", "parts", "science" ],
+    "depends": [
+        { "name": "ModuleManager" }
+    ],
+    "install": [
+        { "find": "FarHorizons", "install_to": "GameData" }
+    ]
+}
