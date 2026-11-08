@@ -124,7 +124,7 @@ To have CKAN track the mod (so it shows as installed and can be removed or upgra
 ./package-ckan.sh                                   # -> dist/FarHorizons-<version>.zip + dist/FarHorizons.ckan
 ckan install --instance <name> -c dist/FarHorizons.ckan
 ```
-CKAN won't overwrite files it doesn't own, so remove any hand-copied `GameData/FarHorizons` first. To push a rebuild, bump the version in `FarHorizons.version`, re-run `package-ckan.sh`, then `ckan upgrade --instance <name> -c dist/FarHorizons.ckan`.
+CKAN won't overwrite files it doesn't own, so remove any hand-copied `GameData/FarHorizons` first. To push a rebuild, bump the version in `FarHorizons.version`, re-run `package-ckan.sh`, then `ckan remove --instance <name> FarHorizons` and install the new `.ckan` as above (`ckan upgrade -c` does not pick up a newer local file).
 
 ## Layout
 ```

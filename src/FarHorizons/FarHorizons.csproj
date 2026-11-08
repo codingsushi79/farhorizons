@@ -9,7 +9,7 @@
     <LangVersion>7.3</LangVersion>
     <AssemblyName>FarHorizons</AssemblyName>
     <RootNamespace>FarHorizons</RootNamespace>
-    <Version>0.1.0</Version>
+    <Version>0.1.1</Version>
     <Nullable>disable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
